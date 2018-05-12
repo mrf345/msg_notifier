@@ -3,18 +3,17 @@
 var msgNotifier = function (options={}, callback=function () {}) {
     returnMN = {} // unique object name to return
     
-
     returnMN.options = {
-        url_hash: options.url_hash || 'msgNotifier', // hash keyword to initiate notification with
+        url_hash: options.url_hash || ['msgNotifier'], // hash keyword to initiate notification with
         without_hash: options.without_hash || 'false', // to initiate msg overlay even if invalid hash
-        text: options.text || 'This is the overlay msgNotifier !',
+        text: options.text || ['This is the overlay msgNotifier !'],
         textClass: options.textClass || '',
         textStyle: options.textStyle || {
             'color': 'white',
             'font-family': 'Georgia, Times, serif',
             'text-shadow': '0 0 30px rgba(255,255,255,0.5)'
         },
-        iconClass: options.iconClass || 'fa fa-envelope',
+        iconClass: options.iconClass || ['fa fa-envelope'],
         iconStyle: options.iconStyle || {
             'color': 'white',
             'text-shadow': '0 0 30px rgba(255,255,255,0.5)',
@@ -34,14 +33,19 @@ var msgNotifier = function (options={}, callback=function () {}) {
         
     }
 
+    returnMN.getTheIndex = function () {
+        var indexToReturn = returnMN.options.url_hash.indexOf(window.location.href.split('#').slice(-1)[0])
+        return indexToReturn === -1 ? 0 : indexToReturn
+    }
+
     returnMN.defaults = {
         loopButton: false,
         loopOverlay: false,
         elements: { // list of jQuery elements to be appended
-            text: $('<h1>').text(returnMN.options.text).css(returnMN.options.textStyle).addClass('text-center'),
+            text: $('<h1>').text(returnMN.options.text[returnMN.getTheIndex()]).css(returnMN.options.textStyle).addClass('text-center'),
             button: $('<h1>').addClass(returnMN.options.buttonClass).css(returnMN.options.buttonStyle)
             .text(returnMN.options.buttonText),
-            icon: $('<span>').addClass(returnMN.options.iconClass).css(returnMN.options.iconStyle)
+            icon: $('<span>').addClass(returnMN.options.iconClass[returnMN.getTheIndex()]).css(returnMN.options.iconStyle)
         }
     }
 
@@ -82,12 +86,12 @@ var msgNotifier = function (options={}, callback=function () {}) {
                 })
             }
             var toButtonEffect = function () {
-                $(returnMN.defaults.elements.button).animate({'opacity': '1'}, 1500, complete=function () {
-                    $(returnMN.defaults.elements.button).animate({'opacity': '0.1'}, 1500)    
+                $(returnMN.defaults.elements.button).animate({'opacity': '0.1'}, 1500, complete=function () {
+                    $(returnMN.defaults.elements.button).animate({'opacity': '1'}, 1500)    
                 })
             }
-            returnMN.defaults.loopOverlay = setInterval(toOverlayEffect, 3000)
-            returnMN.defaults.loopButton = setInterval(toButtonEffect, 3000)
+            returnMN.defaults.loopOverlay = setInterval(toOverlayEffect, 5000)
+            returnMN.defaults.loopButton = setInterval(toButtonEffect, 5000)
             toOverlayEffect()
             toButtonEffect()
         }
@@ -97,7 +101,7 @@ var msgNotifier = function (options={}, callback=function () {}) {
         var todoTwice = function () {
             if (
                 window.location.href.split('#')
-                .slice(-1)[0] === returnMN.options.url_hash || returnMN.options.without_hash === 'true'
+                .slice(-1)[0] === returnMN.options.url_hash[returnMN.getTheIndex()] || returnMN.options.without_hash === 'true'
             ) {
                 $('body').append(returnMN.defaults.elements.overlay)
                 $(returnMN.defaults.elements.overlay).animate({'opacity': '1'}, returnMN.options.effectDuration)
