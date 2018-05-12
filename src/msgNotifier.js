@@ -40,13 +40,13 @@ var msgNotifier = function (options={}, callback=function () {}) {
         elements: { // list of jQuery elements to be appended
             text: $('<h1>').text(returnMN.options.text).css(returnMN.options.textStyle).addClass('text-center'),
             button: $('<h1>').addClass(returnMN.options.buttonClass).css(returnMN.options.buttonStyle)
-            .text(returnMN.options.buttonText).attr('id', 'msgButton'),
+            .text(returnMN.options.buttonText),
             icon: $('<span>').addClass(returnMN.options.iconClass).css(returnMN.options.iconStyle)
         }
     }
 
     returnMN.defaults.elements.overlay = $('<div>')
-    .attr('id', 'msgNotifier').addClass(returnMN.options.overlayClass)
+    .addClass(returnMN.options.overlayClass)
     .css(Object.assign({
         'display': 'flex',
         'position': 'fixed',
