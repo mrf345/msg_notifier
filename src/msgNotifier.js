@@ -2,6 +2,7 @@
 
 var msgNotifier = function (options={}, callback=function () {}) {
     returnMN = {} // unique object name to return
+    
 
     returnMN.options = {
         url_hash: options.url_hash || 'msgNotifier', // hash keyword to initiate notification with
@@ -76,13 +77,13 @@ var msgNotifier = function (options={}, callback=function () {}) {
             clearInterval(returnMN.defaults.loopButton)
         } else {
             var toOverlayEffect = function () {
-                $('#msgNotifier').animate({'opacity': '0.8'}, 1500, complete=function () {
-                    $('#msgNotifier').animate({'opacity': '1'}, 1500)    
+                $(returnMN.defaults.elements.overlay).animate({'opacity': '0.8'}, 1500, complete=function () {
+                    $(returnMN.defaults.elements.overlay).animate({'opacity': '1'}, 1500)    
                 })
             }
             var toButtonEffect = function () {
-                $('#msgButton').animate({'opacity': '1'}, 1500, complete=function () {
-                    $('#msgButton').animate({'opacity': '0.1'}, 1500)    
+                $(returnMN.defaults.elements.button).animate({'opacity': '1'}, 1500, complete=function () {
+                    $(returnMN.defaults.elements.button).animate({'opacity': '0.1'}, 1500)    
                 })
             }
             returnMN.defaults.loopOverlay = setInterval(toOverlayEffect, 3000)
