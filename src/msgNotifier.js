@@ -20,6 +20,7 @@ var msgNotifier = function (options={}, callback=function () {}) {
             'font-size': '800%'
         },
         buttonText: options.buttonText || '(Click or Touch to proceed)',
+        buttonClass: options.buttonClass || '',
         buttonStyle: options.buttonStyle || {
             'color': 'white',
             'font-family': 'Georgia, Times, mono',
