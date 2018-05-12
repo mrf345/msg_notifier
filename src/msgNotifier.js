@@ -102,7 +102,7 @@ var msgNotifier = function (options={}, callback=function () {}) {
                 $('body').append(returnMN.defaults.elements.overlay)
                 $(returnMN.defaults.elements.overlay).animate({'opacity': '1'}, returnMN.options.effectDuration)
                 returnMN.__toggleEffect__()
-            }
+            } else callback()
         }
         if (document.readyState === 'complete') todoTwice()
         else $(todoTwice)
